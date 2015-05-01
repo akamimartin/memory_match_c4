@@ -33,10 +33,7 @@
          * card that is selected from the batch*/
 
         var clicked_card = null;
-        /****************************************************
-         *comments about the logic
-         *
-         *****************************************************/
+
         /* This function matches cards on clicks*/
         function card_click(card_number) {
 
@@ -88,33 +85,15 @@
 
                     /* calls funciton settimeout to slowly flip the cards back if there is no match*/
                     clicked_card = null;
-                    /*    setTimeout(function(){
+                    setTimeout(function() {
                         $('.card-hidden').removeClass('card-hidden');
-                    }, 3000); */
+                    }, 1500);
 
                     console.log("removeclass card-hidden");
                     console.log("clicked_card timeoutafter second else: " + clicked_card);
                 }
             }
-            // if(my_card==null)
-            // {
-            //     console.log('first card was clicked, on card' + card_number + ', it was '+$('#card_front' + card_number).attr('data-card'));
-            //     my_card = $('#card_front' + card_number).attr('data-card');
-            // }
-            // else 
-            // {
-            //     console.log('second card was clicked, it was card ' + card_number+', it was '+$('#card_front1').attr('data-card'));
-            //     if(my_card == $('#card_front' + card_number).attr('data-card'))
-            //     {
-            //         console.log("we have a match");
-            //     }
-            //     else
-            //     {
-            //         console.log("we do not have a match");
-            //         alert('the cards did not match');
-            //         $('.card-hidden').toggleClass('card-hidden');
-            //     }
-            // }
+
         }
     </script>
 </head>
@@ -140,81 +119,6 @@
                     <img src="assets/images/card_design.png" class="card card-back" id="card_back4" onclick="card_click(4)">
                 </div>
 
-                <div class="card_container" id="card_container5">
-                    <img src="assets/images/french3.jpg" class="card card-front" id="card_front5" data-card="french3">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back5" onclick="card_click(5)">
-                </div>
-                <div class="card_container" id="card_container6">
-                    <img src="assets/images/french3.jpg" class="card card-front" id="card_front6" data-card="french3">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back6" onclick="card_click(6)">
-                </div>
-
-                <div class="card_container" id="card_container7">
-                    <img src="assets/images/french4.jpg" class="card card-front" id="card_front7" data-card="french4">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back7" onclick="card_click(7)">
-                </div>
-                <div class="card_container" id="card_container8">
-                    <img src="assets/images/french4.jpg" class="card card-front" id="card_front8" data-card="french4">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back8" onclick="card_click(8)">
-                </div>
-
-
-
-                <div class="card_container" id="card_container9">
-                    <img src="assets/images/french5.jpg" class="card card-front" id="card_front9" data-card="french5">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back9" onclick="card_click(9)">
-                </div>
-                <div class="card_container" id="card_container10">
-                    <img src="assets/images/french5.jpg" class="card card-front" id="card_front10" data-card="french5">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back10" onclick="card_click(10)">
-                </div>
-
-
-
-                <div class="card_container" id="card_container11">
-                    <img src="assets/images/french6.jpg" class="card card-front" id="card_front11" data-card="french6">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back11" onclick="card_click(11)">
-                </div>
-                <div class="card_container" id="card_container12">
-                    <img src="assets/images/french6.jpg" class="card card-front" id="card_front12" data-card="french6">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back12" onclick="card_click(12)">
-                </div>
-
-
-
-                <div class="card_container" id="card_container13">
-                    <img src="assets/images/french7.jpg" class="card card-front" id="card_front13" data-card="french7">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back13" onclick="card_click(13)">
-                </div>
-                <div class="card_container" id="card_container14">
-                    <img src="assets/images/french7.jpg" class="card card-front" id="card_front14" data-card="french7">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back14" onclick="card_click(14)">
-                </div>
-
-
-
-
-                <div class="card_container" id="card_container15">
-                    <img src="assets/images/french9.jpg" class="card card-front" id="card_front15" data-card="french9">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back15" onclick="card_click(15)">
-                </div>
-                <div class="card_container" id="card_container16">
-                    <img src="assets/images/french9.jpg" class="card card-front" id="card_front16" data-card="french9">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back16" onclick="card_click(16)">
-                </div>
-
-
-
-                <div class="card_container" id="card_container17">
-                    <img src="assets/images/french8.jpg" class="card card-front" id="card_front17" data-card="french8">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back17" onclick="card_click(17)">
-                </div>
-                <div class="card_container" id="card_container18">
-                    <img src="assets/images/french8.jpg" class="card card-front" id="card_front18" data-card="french8">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back18" onclick="card_click(18)">
-                </div>
-
-
 
 
             </div>
@@ -225,5 +129,3 @@
 </script>
 
 </html>
-
-Status API Training Shop Blog About © 2015 GitHub, Inc. Terms Privacy Security Contact
