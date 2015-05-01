@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <style>
+        .card_container{
+            position: relative;
+            display: inline-block;
+            background-color: red;
+            height: 150px;
+            width: 110px;
+        }
+        .card{
+            height: 150px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        .card-front{
+            width: 110px;
+        }
+        .card-hidden{
+            display: none;
+        }
+        .cards-matched{
+        }
+    </style>
+    <script>
+        /* sets the variable to null so that we know it's the first 
+         * card that is selected from the batch*/
+        
+        var clicked_card = null;
+        /****************************************************
+        *comments about the logic
+        *
+        *****************************************************/
+        
+        
+        
+        
+        
+        
+        /* This function matches cards on clicks*/
+        function card_click(card_number){
+            
+            console.log("card_number : ", card_number);
+            console.log('I am acting on number'+ card_number);
+            
+            /*This is a variable that contains #card_back and the number of the card*/
+            var cardBackId = "#card_back" + card_number;
+             console.log("cardBackId : ", cardBackId);
+            
+             /*This is a variable that contains #card_front and the number of the card*/
+            var cardFrontId = "#card_front" + card_number;
+            console.log("cardFrontId : ", cardFrontId);  
+            
+            //always hide the card that was clicked
+            /*the backof the card is hidden so that the image will be displayed*/
+            $(cardBackId).addClass('card-hidden');
+             console.log("cardBackId after addclass: ", cardBackId); 
+            /*This variable sets the current card data to the image for the cardfrontid*/
+            var current_card_data = $(cardFrontId).attr('data-card');
+            
+            /*This displays the current image on the console.log*/
+            console.log("card_data : ", current_card_data);
+            
+            /*The if statement is checking if it is the first card clicked -which will be nulls*/
+             console.log("clicked card " + clicked_card );
+            
+            if(clicked_card == null){
+                
+                /*console.log displays that first card is clicked*/
+                console.log("First card was clicked");
+                /*setting variable clicked_card  is set to the current_card_data -image*/
+                clicked_card = current_card_data;
+                
+                /*else part of the conditional statement where the first if is false*/
+            }else{
+                /*working with the second clicked card*/
+                console.log("Second card was clicked");
+                /*checking if the selected card image matches the first card*/
+                if(clicked_card === current_card_data){
+                    
+                    /*display we have a match to the console */
+                    console.log("We have a match");
+                    
+                    /*the second card does not match the first falls into the last else statement*/
+                    clicked_card = null;
+                  
+                }else{
+                    /*displays no match on the console*/
+                    
+                    console.log("No Match");
+                    /* calls funciton settimeout to slowly flip the cards back if there is no match*/
+                     clicked_card = null;
+                    setTimeout(function(){
+                        $('.card-hidden').removeClass('card-hidden');
+                    }, 3000);
+                }
+            }
+            // if(my_card==null)
+            // {
+            //     console.log('first card was clicked, on card' + card_number + ', it was '+$('#card_front' + card_number).attr('data-card'));
+            //     my_card = $('#card_front' + card_number).attr('data-card');
+            // }
+            // else 
+            // {
+            //     console.log('second card was clicked, it was card ' + card_number+', it was '+$('#card_front1').attr('data-card'));
+            //     if(my_card == $('#card_front' + card_number).attr('data-card'))
+            //     {
+            //         console.log("we have a match");
+            //     }
+            //     else
+            //     {
+            //         console.log("we do not have a match");
+            //         alert('the cards did not match');
+            //         $('.card-hidden').toggleClass('card-hidden');
+            //     }
+            // }
+        }
+    </script>
+</head>
+<body>
+    <div class="content">
+        <div class="game_area">
+            <div class="card_row">
+                <div class="card_container" id="card_container1">
+                    <img src="assets/images/british_flag.jpg" class="card card-front" id="card_front1" data-card="british flag">
+                    <img src="assets/images/card_design.png" class="card card-back" id="card_back1" 
+                    onclick="card_click(1)"
+                    >
+                </div>
+                <div class="card_container" id="card_container2">
+                    <img src="assets/images/british_flag.jpg" class="card card-front" id="card_front2" data-card="british flag">
+                    <img src="assets/images/card_design.png" class="card card-back" id="card_back2" 
+                    onclick="card_click(2)"
+                    >
+                </div>
+                <div class="card_container" id="card_container3">
+                    <img src="assets/images/pets.jpg" class="card card-front" id="card_front3" data-card="cute puppy">
+                    <img src="assets/images/card_design.png" class="card card-back" id="card_back3" 
+                    onclick="card_click(3)"
+                    >
+                </div>
+                    <div class="card_container" id="card_container4">
+                    <img src="assets/images/starfish.jpg" class="card card-front" id="card_front4" data-card="starfish">
+                    <img src="assets/images/card_design.png" class="card card-back" id="card_back4" 
+                    onclick="card_click(4)"
+                    >
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+</script>
+</html>
+
+Status API Training Shop Blog About
+© 2015 GitHub, Inc. Terms Privacy Security Contact

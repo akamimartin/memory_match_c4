@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<style>
+
+.card_container{
+    position: relative;
+  display: inline-block;
+    background-color: red;
+    height: 150px;
+    width: 110px;
+}
+.card{
+    height: 150px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.card-front{
+    width: 110px;
+}
+.card-hidden{
+    display: none;
+}
+.card-stay-hidden {
+
+
+</style>
+<script>
+var my_card = null; 
+function card_click(card_number){
+        console.log("card_number:" , card_number);
+        $('#card_back' + card_number).toggleClass('card-hidden');
+    
+        if(my_card==null)
+          {my_card = $('#card_front1').attr('data-card');
+            console.log('first card was clicked, on card1, it was '+$('#card_front1').attr('data-card'));
+         }
+        else 
+         {  
+          console.log('second card was clicked, it was card 2, it was '+$('#card_front1').attr('data-card'));
+            //do stuff for 2nd click
+
+         if(my_card == $('#card_front1').attr('data-card')) {
+            console.log('we have a match '); 
+             } else   {
+
+            console.log('we do not have match match');  
+                 alert('the cards did not match');
+                 /*can use css transform */
+                $('.card-hdden').toggleClass('card-hidden');
+             }
+          } 
+}     
+/* $('.card-hidden').toggleClass('card-hidden'')"  */
+
+/* document.getelementbyid('card_caontainer3') */
+</script>
+</head>
+<body>
+<div class="content">
+<div class="game_area">
+    <div class="card_row">
+        <div class="card_container" id="card_container1">
+            <img src="assets/images/british_flag.jpg" class="card card-front" id="card_front1" data-card="british flag">
+            <img src="assets/images/card_design.png" class="card card-back" id="card_back1"  
+              onclick="card_click(1)"
+             >                      
+        </div>
+
+          <div class="card_container" id="card_container2">
+            <img src="assets/images/british_flag.jpg" class="card card-front" id="card_front21" data-card="british flag">
+            <img src="assets/images/card_design.png" class="card card-back" id="card_back2"  
+              onclick="card_click(2)"
+                $('#card_back2').toggleClass('card-hidden');
+              >   
+        </div>   
+
+
+          <div class="card_container" id="card_container3">
+            <img src="assets/images/pets.jpg" class="card card-front" id="card_front21" data-card="puppy">
+            <img src="assets/images/card_design.png" class="card card-back" id="card_back3"  
+              onclick="card_click(3)"
+               >    
+        </div>   
+
+
+
+
+
+
+
+    </div>
+</div>
+</div>
+</body>
+<script>
+</script>
+</html>
