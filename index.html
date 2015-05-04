@@ -2,130 +2,364 @@
 <html>
 
 <head>
-
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <style>
-        .card_container {
-            position: relative;
-            display: inline-block;
-            background-color: red;
-            height: 150px;
-            width: 110px;
-        }
-        .card {
-            height: 150px;
-            position: absolute;
-            left: 0px;
-            top: 0px;
-        }
-        .card-front {
-            width: 110px;
-        }
-        .card-hidden {
-            display: none;
-        }
-        .cards-matched {
-            display: inline;
-        }
-    </style>
+
+
+</head>
+
+<body>
+
     <script>
         /* sets the variable to null so that we know it's the first 
          * card that is selected from the batch*/
 
-        var clicked_card = null;
+        var firstclicked_card = null;
+        var secondclicked_card = null;
+        var notmatched = false;
+        var numberoftries = 0;
 
-        /* This function matches cards on clicks*/
+        var firsttime = true;
+        var starttimer = true;
+        var cardmatched = 0;
+        var ms = new Date();
+        var cardcount = 0;
+        var accurancy = 0;
+        var answer = parseInt(1234.56 * 10);
+        var goodcards = 0;
+        var numfixed = 0;
+
+
+
+        function pretty_time_string(num) {
+            return (num < 10 ? "0" : "") + num;
+        }
+
+
+        $(document).ready(function () {
+            $("#buttongame").click(function () {
+                $("#gameinstr").toggle(function () {
+                    if ($("#buttongame").val() == "Hide") $("#buttongame").val("Show");
+                    else $("#buttongame").val("Hide");
+                });
+            });
+
+            $("#resetgame").click(function () {
+
+                //  setTimeout(function() {
+
+                //   var cardreset = $(".card-hidden").parent().find('.card-front').not(".cards-matched");
+
+                var cardreset = $(".card-hidden").parent().find('.card-front', '.card-back');
+                cardreset.parent().find('.card-back').removeClass('card-hidden');
+                /*  notmatched = false; */
+                $('#timeplayed').text(" ");
+                $('#tries').text(" ");
+                $('#matches').text(" ");
+                $('#accuracy').text(" ");
+                $('#encouragement').text(" ");
+                numfixed = 0;
+                numberoftries = 0;
+                cardmatched = 0;
+                accurancy = 0;
+                goodcards = 0;
+
+
+                hours = 0;
+                minutes = 0;
+                seconds = 0;
+
+
+                starttimer = false;
+
+            });
+
+        });
+
+
+        /****************************************************
+         * This function matches cards on clicks
+         *
+         *****************************************************/
+
         function card_click(card_number) {
 
-            console.log("clicked card is right after function: ", clicked_card);
-            console.log("card_number : ", card_number);
-            console.log('I am acting on number' + card_number);
+            console.log("**clicked function starttimer:" + starttimer);
+            $("#encouragement").html(" ");
+            if (starttimer) {
+                console.log("**after if starttimer:" + starttimer);
+                var end = new Date().getTime();
+                var elapsed = (+new Date() - end);
+                var start = new Date;
+
+                setInterval(function () {
+                    var total_seconds = (new Date - start) / 1000;
+                    var hours = Math.floor(total_seconds / 3600);
+
+                    total_seconds = total_seconds % 3600;
+                    var minutes = Math.floor(total_seconds / 60);
+                    total_seconds = total_seconds % 60;
+
+                    var seconds = Math.floor(total_seconds);
+
+                    hours = pretty_time_string(hours);
+                    minutes = pretty_time_string(minutes);
+                    seconds = pretty_time_string(seconds);
+
+                    var currentTimeString = hours + ":" + minutes + ":" + seconds;
+
+                    $('.timer').text(currentTimeString);
+                    $('#timeplayed').text(currentTimeString);
+
+                }, 1000);
+
+
+            }
+            starttimer = false;
+
+            numberoftries = numberoftries + 1;
+
+            $("#tries").html(numberoftries);
+            if (notmatched) {
+                return;
+            }
 
             var cardBackId = "#card_back" + card_number;
-
-            console.log("cardBackId : ", cardBackId);
-
             var cardFrontId = "#card_front" + card_number;
-            console.log("cardFrontId : ", cardFrontId);
-
-            //always hide the card that was clicked
-            /*the backof the card is hidden so that the image will be displayed*/
 
             $(cardBackId).addClass('card-hidden');
 
-            console.log("cardBackId after addclass: ", cardBackId);
+            if (firstclicked_card == null) {
+                accurancy = (goodcards / numberoftries) * 100;
+                numfixed = accurancy.toFixed(0) + "%";
 
-            var current_card_data = $(cardFrontId).attr('data-card');
+                $("#accuracy").html(numfixed);
 
-            console.log("card_data : ", current_card_data);
+                firstclicked_card = $(cardFrontId);
 
-            console.log("clicked card " + clicked_card);
-
-            if (clicked_card == null) {
-                console.log("First card was clicked");
-                /*setting variable clicked_card  is set to the current_card_data -image*/
-                clicked_card = current_card_data;
-                console.log("first card clicked -clicked card " + clicked_card);
             } else {
+                secondclicked_card = $(cardFrontId);
 
-                console.log("Second card was clicked");
+                if (firstclicked_card.attr('data-card') === secondclicked_card.attr('data-card')) {
+                    cardmatched = cardmatched + 1;
+                    cardcount = cardcount + 1;
+                    goodcards = goodcards + 2;
 
-                if (clicked_card === current_card_data) {
+                    firstclicked_card.addClass('cards-matched');
+                    secondclicked_card.addClass('cards-matched');
 
-                    console.log("We have a match");
+                    firstclicked_card = null;
+                    secondtclicked_card = null;
 
-                    clicked_card = null;
-                    console.log("clicked_card after first else: " + clicked_card);
+                    $("#matches").html(cardmatched);
+
+                    accurancy = (goodcards / numberoftries) * 100;
+                    numfixed = accurancy.toFixed(0) + "%";
+
+                    $("#accuracy").html(numfixed);
+
+
+                    if (cardmatched == 1) {
+                        $("#encouragement").html("You're off to a great start - your first match!");
+                    } else if (cardmatched == 2) {
+                        $("#encouragement").html("You did it - another match!");
+
+                    } else if (cardmatched == 3) {
+                        $("#encouragement").html("Keep up the great work - three matches!");
+
+                    } else if (cardmatched == 4) {
+                        $("#encouragement").html("Your're on the road to greatness!");
+
+                    } else if (cardmatched == 5) {
+                        $("#encouragement").html("Keep it up - you're doing spectacular!");
+
+                    } else if (cardmatched == 6) {
+                        $("#encouragement").html("Excellent - only 3 more matches to go!");
+
+                    } else if (cardmatched == 7) {
+                        $("#encouragement").html("Almost there - keep up the great work!");
+
+                    } else if (cardmatched == 8) {
+                        $("#encouragement").html("Phenomenal - only one more to go!!");
+
+                    } else if (cardmatched == 9) {
+                        $("#encouragement").html("YOU DID IT!");
+
+                    }
+
+                    if (cardmatched == 9) {
+                        console.log("cardmatched after 8 if: " + cardmatched);
+
+                        $("#congrats").html("YOU DID IT - YOU WON " + "-" + " CONGRATULATIONS!");
+                        cardcount = 0;
+                        firsttime = true;
+                        starttimer = false;
+                    } else {
+                        firsttime = false;
+                    }
+
+
 
                 } else {
-                    /*displays no match on the console*/
+                    $("#encouragement").html("Thats okay, one litte setback, try to remember the color of the French dog and the placement of the last dog.");
 
-                    console.log("No Match");
+                    accurancy = (goodcards / numberoftries) * 100;
+                    numfixed = accurancy.toFixed(2) + "%";
+                    $("#accuracy").html(numfixed);
 
+                    firstclicked_card = null;
+                    secondtclicked_card = null;
 
-                    /* calls funciton settimeout to slowly flip the cards back if there is no match*/
-                    clicked_card = null;
-                    setTimeout(function() {
-                        $('.card-hidden').removeClass('card-hidden');
-                    }, 1500);
+                    notmatched = true;
 
-                    console.log("removeclass card-hidden");
-                    console.log("clicked_card timeoutafter second else: " + clicked_card);
+                    setTimeout(function () {
+
+                        var cardstoshow = $(".card-hidden").parent().find('.card-front').not(".cards-matched");
+                        cardstoshow.parent().find('.card-back').removeClass('card-hidden');
+                        notmatched = false;
+
+                    }, 1000);
+                    accurancy = (goodcards / numberoftries) * 100;
+                    numfixed = accurancy.toFixed(0) + "%";
+
+                    $("#accuracy").html(numfixed);
+
                 }
             }
-
         }
     </script>
-</head>
-
-<body>
-    <div class="content">
-        <div class="game_area">
-            <div class="card_row">
-                <div class="card_container" id="card_container1">
-                    <img src="assets/images/french1.jpg" class="card card-front" id="card_front1" data-card="french1">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back1" onclick="card_click(1)">
-                </div>
-                <div class="card_container" id="card_container2">
-                    <img src="assets/images/french1.jpg" class="card card-front" id="card_front2" data-card="french1">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back2" onclick="card_click(2)">
-                </div>
-                <div class="card_container" id="card_container3">
-                    <img src="assets/images/french2.jpg" class="card card-front" id="card_front3" data-card="french2">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back3" onclick="card_click(3)">
-                </div>
-                <div class="card_container" id="card_container4">
-                    <img src="assets/images/french2.jpg" class="card card-front" id="card_front4" data-card="french2">
-                    <img src="assets/images/card_design.png" class="card card-back" id="card_back4" onclick="card_click(4)">
-                </div>
 
 
+    <div class="header">
 
-            </div>
-        </div>
-    </div>
+        <img id="logo" src="assets/images/card_design.png">
+
+        <h1 id="maintitle">Memory Game<h1>
+        <h2 id="congrats"></h2>
+
+   </div>
+
+
+<!-- <div class="container"> -->    
+<div class="content">     
+<div class="sidebar">  
+<ul class="side-menu">
+<li>Time Played: <span id="timeplayed"></span></li> 
+<li>Number of tries: <span id="tries"></span></li> 
+<li>Total Matches: <span id="matches"></span></li> 
+<li>Accuracy: <span id="accuracy"></span></li>
+<li id="encouragement"> </li> 
+<li> <button id="resetgame" >Reset Game</button></li>
+    
+    
+</ul>
+<div id="gameinstr">Click on the cards to find a match.  There are 9 possible matches.  When two cards are clicked that do not match, the cards will be turned over, to try again.  The cards that match will remain displayed with the picture. Once there are nine matches, hit the reset button to play a new game.</div>
+<button id="buttongame" value="Hide">Game Instructions</button>
+  
+    
+</div>
+ 
+
+<!-- <div class="content">  -->
+<div class="game_area">
+<div class="card_row">
+<div class="card_container" id="card_container1">
+    <img src="assets/images/french1.jpg" class="card card-front" id="card_front1" data-card="french1">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back1" onclick="card_click(1)">
+</div>
+
+<div class="card_container" id="card_container3">
+    <img src="assets/images/french2.jpg" class="card card-front" id="card_front3" data-card="french2">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back3" onclick="card_click(3)">
+</div>
+    <div class="card_container" id="card_container6">
+    <img src="assets/images/french3.jpg" class="card card-front" id="card_front6" data-card="french3">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back6" onclick="card_click(6)">
+</div>
+<div class="card_container" id="card_container4">
+    <img src="assets/images/french2.jpg" class="card card-front" id="card_front4" data-card="french2">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back4" onclick="card_click(4)">
+</div>
+<div class="card_container" id="card_container2">
+    <img src="assets/images/french1.jpg" class="card card-front" id="card_front2" data-card="french1">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back2" onclick="card_click(2)">
+</div>
+<div class="card_container" id="card_container5">
+    <img src="assets/images/french3.jpg" class="card card-front" id="card_front5" data-card="french3">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back5" onclick="card_click(5)">
+</div>
+
+
+<div class="card_container" id="card_container7">
+    <img src="assets/images/french4.jpg" class="card card-front" id="card_front7" data-card="french4">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back7" onclick="card_click(7)">
+</div>
+
+
+
+
+<div class="card_container" id="card_container9">
+    <img src="assets/images/french5.jpg" class="card card-front" id="card_front9" data-card="french5">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back9" onclick="card_click(9)">
+</div>
+    <div class="card_container" id="card_container8">
+    <img src="assets/images/french4.jpg" class="card card-front" id="card_front8" data-card="french4">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back8" onclick="card_click(8)">
+</div>
+<div class="card_container" id="card_container10">
+    <img src="assets/images/french5.jpg" class="card card-front" id="card_front10" data-card="french5">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back10" onclick="card_click(10)">
+</div>
+
+
+<div class="card_container" id="card_container12">
+<img src="assets/images/french6.jpg" class="card card-front" id="card_front12" data-card="french6">
+<img src="assets/images/card_design.png" class="card card-back" id="card_back12" onclick="card_click(12)">
+</div>
+
+
+
+<div class="card_container" id="card_container13">
+    <img src="assets/images/french7.jpg" class="card card-front" id="card_front13" data-card="french7">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back13" onclick="card_click(13)">
+</div>
+    <div class="card_container" id="card_container11">
+    <img src="assets/images/french6.jpg" class="card card-front" id="card_front11" data-card="french6">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back11" onclick="card_click(11)">
+</div>
+<div class="card_container" id="card_container14">
+    <img src="assets/images/french7.jpg" class="card card-front" id="card_front14" data-card="french7">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back14" onclick="card_click(14)">
+</div>
+
+
+
+<div class="card_container" id="card_container17">
+    <img src="assets/images/french8.jpg" class="card card-front" id="card_front17" data-card="french8">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back17" onclick="card_click(17)">
+</div>
+    <div class="card_container" id="card_container15">
+    <img src="assets/images/french9.jpg" class="card card-front" id="card_front15" data-card="french9">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back15" onclick="card_click(15)">
+</div>
+<div class="card_container" id="card_container18">
+    <img src="assets/images/french8.jpg" class="card card-front" id="card_front18" data-card="french8">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back18" onclick="card_click(18)">
+</div>
+    
+
+<div class="card_container" id="card_container16">
+    <img src="assets/images/french9.jpg" class="card card-front" id="card_front16" data-card="french9">
+    <img src="assets/images/card_design.png" class="card card-back" id="card_back16" onclick="card_click(16)">
+</div>
+
+</div>
+
+</div>
+</div>
+ 
 </body>
-<script>
-</script>
+
 
 </html>
