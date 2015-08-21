@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css"  href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
@@ -20,33 +20,15 @@
         var notmatched = false;
         var numberoftries = 0;
 
-
-
-
         var firsttime = true;
         var starttimer = true;
         var cardmatched = 0;
         var ms = new Date();
         var cardcount = 0;
+        var accurancy = 0;
+        var answer = parseInt(1234.56 * 10);
         var goodcards = 0;
         var numfixed = 0;
-
-        /*var myVar = setInterval(function(){ myTimer() }, 1000);
-
-function myTimer() {
-    var d = new Date();
-    var t = d.toLocaleTimeString();
-    document.getElementById("demo").innerHTML = t;
-}
-
-function myStopFunction() {
-    clearInterval(myVar);
-} */
-
-
-
-
-
 
 
 
@@ -55,15 +37,15 @@ function myStopFunction() {
         }
 
 
-        $(document).ready(function() {
-            $("#buttongame").click(function() {
-                $("#gameinstr").toggle(function() {
+        $(document).ready(function () {
+            $("#buttongame").click(function () {
+                $("#gameinstr").toggle(function () {
                     if ($("#buttongame").val() == "Hide") $("#buttongame").val("Show");
                     else $("#buttongame").val("Hide");
                 });
             });
 
-            $("#resetgame").click(function() {
+            $("#resetgame").click(function () {
 
                 //  setTimeout(function() {
 
@@ -82,7 +64,7 @@ function myStopFunction() {
                 cardmatched = 0;
                 accurancy = 0;
                 goodcards = 0;
-                clearInterval(clock);
+
 
                 hours = 0;
                 minutes = 0;
@@ -102,11 +84,6 @@ function myStopFunction() {
          *****************************************************/
 
         function card_click(card_number) {
-            var myVar = setInterval(function() {
-                myTimer()
-            }, 1000);
-
-
 
             console.log("**clicked function starttimer:" + starttimer);
             $("#encouragement").html(" ");
@@ -116,7 +93,7 @@ function myStopFunction() {
                 var elapsed = (+new Date() - end);
                 var start = new Date;
 
-                setInterval(function() {
+                setInterval(function () {
                     var total_seconds = (new Date - start) / 1000;
                     var hours = Math.floor(total_seconds / 3600);
 
@@ -236,7 +213,7 @@ function myStopFunction() {
 
                     notmatched = true;
 
-                    setTimeout(function() {
+                    setTimeout(function () {
 
                         var cardstoshow = $(".card-hidden").parent().find('.card-front').not(".cards-matched");
                         cardstoshow.parent().find('.card-back').removeClass('card-hidden');
@@ -268,7 +245,7 @@ function myStopFunction() {
 <div class="content">     
 <div class="sidebar">  
 <ul class="side-menu">
-<!--<li>Time Played: <span id="timeplayed"></span></li> -->
+<li>Time Played: <span id="timeplayed"></span></li> 
 <li>Number of tries: <span id="tries"></span></li> 
 <li>Total Matches: <span id="matches"></span></li> 
 <li>Accuracy: <span id="accuracy"></span></li>
