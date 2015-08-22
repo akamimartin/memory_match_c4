@@ -1,0 +1,160 @@
+        html {
+            width: 1200px;
+            height: 100vh;
+        }
+        
+        .header,
+        .sidebar,
+        .gamecontent {
+            box-sizing: border-box;
+        }
+        
+        #logo {
+            float: left;
+            marging-left: 20px;
+            height: 110px;
+            width: 100px;
+        }
+        
+        .header {
+            border: 1px solid purple;
+            text-align: center;
+            background-color: #6e66b6;
+            color: white;
+            height: 110px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .content {
+            border: 1px solid purple;
+            height: 545px;
+            width: 1182px;
+            background-color: #C3DFFF;
+        }
+        
+        .sidebar {
+            float: left;
+            display: inline-block;
+            width: 23%;
+            background-color: #4CB7DB;
+            font-size: 20px;
+            color: purple;
+            font-family: Arial;
+            height: 100%;
+            /*   vertical-align: top; */
+        }
+        
+        .card_container {
+            float: left;
+            position: relative;
+            s display: inline-block;
+            margin-left: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            background-color: #C3DFFF;
+            height: 168px;
+            width: 140px;
+        }
+        
+        .card {
+            height: 165px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        
+        .card-back {
+            border-radius: 20%;
+            height: 170px;
+            width: 140px;
+        }
+        
+        .card-front {
+            border-radius: 20%;
+            border-radius: 20%;
+            height: 168px;
+            width: 140px;
+        }
+        
+        .card-hidden {
+            display: none;
+        }
+        
+        .cardreset {
+            display: block;
+        }
+        
+        #gameinstr {
+            display: none;
+        }
+        
+        #resetgame {
+            background-color: cornflowerblue;
+            color: white;
+            font-size: 20px;
+            border-radius: 05%;
+            width: 150px;
+            height: 30px;
+            margin-top: 20px;
+        }
+        
+        #buttongame {
+            background-color: cornflowerblue;
+            color: white;
+            font-size: 20px;
+            border-radius: 05%;
+            width: 150px;
+            height: 60px;
+            margin-left: 26px;
+        }
+        
+        #gameinstr {
+            color: white;
+            font-size: 16px;
+            margin-left: 10px;
+            padding-bottom: 10px;
+        }
+        
+        ul li {
+            margin-left: -15px;
+            list-style-type: none;
+        }
+        
+        #timeplayed {
+            text-align: right;
+            color: white;
+            text-align: right;
+            font-size: 15;
+        }
+        
+        #tries {
+            text-align: right;
+            color: white;
+            text-align: right;
+            font-size: 15;
+        }
+        
+        #matches {
+            text-align: right;
+            color: white;
+            text-align: right;
+            font-size: 15;
+        }
+        
+        #accuracy {
+            text-align: right;
+            padding-left: 1px;
+            color: white;
+            text-align: right;
+            font-size: 15;
+        }
+        
+        #encouragement {
+            padding-left: 2px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: white;
+            text-align: left;
+            font-size: 15;
+        }
